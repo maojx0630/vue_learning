@@ -47,6 +47,7 @@
   </div>
 </template>
 <script>
+import { valiPhone , valiPass , valiCode} from '@/utils/validata';
 export default {
   name: "login",
   data() {
@@ -55,8 +56,7 @@ export default {
         return callback(new Error("手机不能为空"));
       }
       setTimeout(() => {
-        let reg = /^1[0-9]{10}$/;
-        if (!reg.test(value)) {
+        if (!valiPhone(value)) {
           callback(new Error("请输入手机号"));
         } else {
           callback();
@@ -64,11 +64,10 @@ export default {
       }, 1000);
     };
     var validatePass = (rule, value, callback) => {
-      let reg = /(?!^[0-9]+$)(?!^[A-z]+$)(?!^[^A-z0-9]+$)^[^\s\u4e00-\u9fa5]{8,20}$/;
       if (value === "") {
         callback(new Error("请输入密码"));
       } else {
-        if (reg.test(value)) {
+        if (valiPass(value)) {
           callback();
         } else {
           callback(
@@ -80,10 +79,10 @@ export default {
       }
     };
     var validateCode = (rule, value, callback) => {
-      let reg = /^[0-9]{6}$/;
+      
       if (value === "") {
         callback(new Error("请输入验证码"));
-      } else if (!reg.test(value)) {
+      } else if (!valiCode(value)) {
         callback(new Error("验证码格式不符!"));
       } else {
         callback();
